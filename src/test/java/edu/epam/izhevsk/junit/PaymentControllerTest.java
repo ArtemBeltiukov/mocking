@@ -1,18 +1,14 @@
 package edu.epam.izhevsk.junit;
 
-import org.hamcrest.CustomMatcher;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.BeforeClass;
-import static org.mockito.AdditionalMatchers.*;
 import org.junit.Test;
-import org.mockito.*;
-import org.mockito.invocation.InvocationOnMock;
-import org.mockito.stubbing.Answer;
+import org.mockito.InjectMocks;
+import org.mockito.Mockito;
 
-import java.util.regex.Matcher;
-
-import static org.mockito.Mockito.*;
+import static org.mockito.AdditionalMatchers.gt;
+import static org.mockito.AdditionalMatchers.not;
+import static org.mockito.Mockito.eq;
 
 public class PaymentControllerTest {
     @InjectMocks
@@ -21,14 +17,10 @@ public class PaymentControllerTest {
     PaymentController controller = new PaymentController(accountService, depositService);
 
     @Before
-    public void setMocks(){
+    public void setMocks() throws InsufficientFundsException {
         Mockito.when(accountService.isUserAuthenticated(not(eq(100L)))).thenReturn(false);
         Mockito.when(accountService.isUserAuthenticated(100L)).thenReturn(true);
-        try {
-            Mockito.when(depositService.deposit(gt(100L) ,Mockito.anyLong())).thenThrow(new InsufficientFundsException());
-        } catch (InsufficientFundsException e) {
-            Assert.fail("depositService.deposit throw an exception");
-        }
+        Mockito.when(depositService.deposit(gt(100L) ,Mockito.anyLong())).thenThrow(new InsufficientFundsException());
     }
 
     @Test
