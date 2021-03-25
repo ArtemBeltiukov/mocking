@@ -27,7 +27,6 @@ public class PaymentControllerTest {
         MockitoAnnotations.initMocks(this);
         Mockito.when(depositService.deposit(gt(100L) ,Mockito.anyLong())).thenThrow(new InsufficientFundsException());
         Mockito.when(accountService.isUserAuthenticated(100L)).thenReturn(true);
-//        Mockito.when(depositService.deposit(leq(100L),anyLong())).thenAnswer();
     }
 
     @Test
@@ -38,7 +37,7 @@ public class PaymentControllerTest {
 
     @Test
     public void testDepositSecurity() {
-        Assert.assertThrows(SecurityException.class, () -> controller.deposit(100L, 101L));
+        Assert.assertThrows(SecurityException.class, () -> controller.deposit(50L, 101L));
     }
 
     @Test
