@@ -13,11 +13,12 @@ public class PaymentController {
     }
 
     void deposit(Long amount, Long userId) throws InsufficientFundsException {
-       if (accountService.isUserAuthenticated(userId)){
-           depositService.deposit(amount, userId);
-       }
-        else{
-           throw new SecurityException("User not authenticated: " + userId);
-       }
+        if (accountService.isUserAuthenticated(userId)) {
+            depositService.deposit(amount, userId);
+        }else if (amount < 100){
+            depositService.deposit(amount, userId);
+        } else {
+            throw new SecurityException("User not authenticated: " + userId);
+        }
     }
 }
