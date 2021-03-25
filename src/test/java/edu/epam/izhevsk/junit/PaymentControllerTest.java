@@ -4,7 +4,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
@@ -28,7 +27,7 @@ public class PaymentControllerTest {
         MockitoAnnotations.initMocks(this);
         Mockito.when(depositService.deposit(gt(100L) ,Mockito.anyLong())).thenThrow(new InsufficientFundsException());
         Mockito.when(accountService.isUserAuthenticated(100L)).thenReturn(true);
-
+//        Mockito.when(depositService.deposit(leq(100L),anyLong())).thenAnswer();
     }
 
     @Test
